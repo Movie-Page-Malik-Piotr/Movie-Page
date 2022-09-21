@@ -1,39 +1,9 @@
 (function (){
     "use strict"
-    function renderHTML(){
-        html = '';
-        html +=
-    }
-    fetch('')
+
     fetch('https://trusted-lavish-roadway.glitch.me/movies')
         .then(response => response.json())
-        .then(data =>{
-
-            }
-        );
-
-    // var jsonData = {};
-    // const submitBtn = $('#btn');
-    // submitBtn.click(function(e){
-    //     $(document).ready(function() {
-    //         var formData = $("#addy").serializeArray();
-    //         // console.log(formData);
-    //         $.each(formData, function() {
-    //             if (jsonData[this.name]) {
-    //                 if (!jsonData[this.name].push) {
-    //                     jsonData[this.name] = [jsonData[this.name]];
-    //                 }
-    //                 jsonData[this.name].push(this.value || '');
-    //             } else {
-    //                 jsonData[this.name] = this.value || '';
-    //             }
-    //         });
-    //         console.log(jsonData);
-    //         e.preventDefault();
-    //     });
-    // });
-
-
+        .then(data => console.log(data));
 })();
 
 
