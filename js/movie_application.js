@@ -6,6 +6,10 @@
 
 })();
 
+
+
+
+
 // # Movies Application
 //
 // For this project, we will be building a single page movie application (SPA). It
