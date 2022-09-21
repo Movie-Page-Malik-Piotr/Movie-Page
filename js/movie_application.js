@@ -1,9 +1,46 @@
 (function (){
     "use strict"
-
+    function renderHTML(data){
+        let html = '';
+        for (let i = 0; i < data.length; ++i){
+            html +=
+                '<div id="movies-card">\n' +
+                '    <div class="card" style="width: 18rem;">\n' +
+                '        <!--    <img src="..." class="card-img-top" alt="...">-->\n' +
+                '        <div class="card-body">\n' +
+                '            <p class="card-text">' + data[i].title +'</p>\n' +
+                '            <p class="card-text">'+ data[i].director+'</p>\n' +
+                '            <p class="card-text">' + data[i].genre + '</p>\n' +
+                '            <p class="card-text">' + data[i].rating + '</p>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</div>'
+        }
+        return html;
+    }
+    function filterMovies(movies){
+        movies.filter(function (movie){
+            movie.title.indexOf("1");
+        })
+    }
     fetch('https://trusted-lavish-roadway.glitch.me/movies')
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(data =>{
+            console.log(data)
+            let allMoviesHTML = renderHTML(data)
+            $('#movies-card').html(allMoviesHTML)
+            filterMovies(data);
+
+        });
+
+
+
+    function searchMovie(title){
+        fetch(`http://www.omdbapi.com/?s=${title}&apikey=` + OMBD_TOKEN1 +'&' )
+            .then(response => response.json())
+            .then(data => console.log(data))
+    }
+
 })();
 
 

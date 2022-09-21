@@ -1,1 +1,1 @@
-const OMBD_TOKEN1 = '1d0cb8ae'
+const OMBD_TOKEN1 = '1d0cb8ae';
