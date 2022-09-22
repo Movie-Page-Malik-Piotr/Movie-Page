@@ -86,6 +86,9 @@
                 '            <p class="card-text">' + data[i].director + '</p>\n' +
                 '            <p class="card-text">' + data[i].genre + '</p>\n' +
                 '            <p class="card-text">' + data[i].rating + '</p>\n' +
+                '            <button type="button" id="edit-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">\n' +
+                '                Edit\n' +
+                '            </button>\n' +
                 '        </div>\n' +
                 '    </div>\n' +
                 '</div>';
