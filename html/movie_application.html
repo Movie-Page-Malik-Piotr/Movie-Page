@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<form>
+<form id="movie-form">
     <fieldset>
         <label for="Title">Title</label>
         <input id="title" type="search" class="" placeholder="Title">
@@ -22,21 +22,61 @@
         <input id="genre" type="search" class="" placeholder="Genre">
         <label for="Rating">Rating</label>
         <input id="rating" type="search" placeholder="Rating">
-        <button type="submit" id="submit" class="">Search</button>
+        <button type="submit"  class="">Search</button>
     </fieldset>
 </form>
 <div id="movies-card">
     <div class="card" style="width: 18rem;">
         <!--    <img src="..." class="card-img-top" alt="...">-->
-        <div class="card-body">
+        <div class="card-body" id="card-body">
             <p class="card-text">Title</p>
             <p class="card-text">Director</p>
             <p class="card-text">Genre</p>
             <p class="card-text">Rating</p>
+            <button type="button" id="edit-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Edit
+            </button>
         </div>
     </div>
 </div>
+<!-- Button trigger modal -->
 
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Movie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="input-title" class="form-label">Title</label>
+                        <input type="email" class="form-control" id="input-title"  required="required">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-director" class="form-label">Director</label>
+                        <input type="email" class="form-control" id="input-director">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-genre" class="form-label">Genre</label>
+                        <input type="email" class="form-control" id="input-genre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-rating" class="form-label">Rating</label>
+                        <input type="email" class="form-control" id="input-rating" required="required">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="submit-edit-btn" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--TOKEN-->
 <script src="../js/keys.js"></script>

@@ -1,5 +1,79 @@
 (function (){
     "use strict"
+    const card_body = $('#card-body');
+    const editBtn = $('#edit-btn');
+    const movieData = {};
+
+    editBtn.click(event =>{
+        populateEdit();
+    })
+
+    function populateEdit(){
+        let movie_info = []
+        card_body.children().each(function (index){
+            movie_info.push($(this).text())
+            console.log(movie_info)
+        })
+
+        console.log(movieData)
+
+        movie_info.map(function (card, index){
+            if(movie_info[0]){movieData.title = movie_info[0]}
+            else if(movie_info[1]){movieData.director = movie_info[1]}
+            else if(movie_info[2]){movieData.genre = movie_info[2]}
+            else if(movie_info[3]){movieData.rating = movie_info[3]}
+            else{return movieData}
+        })
+        console.log(movieData)
+
+        let title, director, genre, rating;
+
+        // title = $('#input-title')
+        title = document.querySelector('#input-title')
+        title.setAttribute('value', movieData.title)
+        director = document.querySelector('#input-director')
+        director.setAttribute('value', movieData.director )
+        genre = document.querySelector('#input-genre')
+        genre.setAttribute('value',movieData.genre )
+        rating = document.querySelector('#input-rating')
+        rating.setAttribute('value',movieData.rating )
+
+        // director = $('#input-director')
+        // genre = $('#input-genre')
+        // rating = $('#input-rating')
+        // title.text(movieData.title)
+        // director.text(movieData.director)
+        // genre.text(movieData.genre)
+        // rating.text(movieData.rating)
+    }
+
+    const submitEditBtn = $('#submit-edit-btn');
+    submitEditBtn.click( event =>{
+        const url = 'https://trusted-lavish-roadway.glitch.me/movies';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(movieData),
+        };
+        fetch(url, options)
+            .then( response => console.log(response) ) /* review was created successfully */
+            .catch( error => console.error(error) );
+    })
+
+
+
+
+    // card_body_list.each(function (index){
+    //     // $(this).text()
+    //     console.log(card_body_list)
+    //
+    //
+    // })
+
+
+
     function renderHTML(data){
         let html = '';
         for (let i = 0; i < data.length; ++i){
@@ -7,39 +81,59 @@
                 '<div id="movies-card">\n' +
                 '    <div class="card" style="width: 18rem;">\n' +
                 '        <!--    <img src="..." class="card-img-top" alt="...">-->\n' +
-                '        <div class="card-body">\n' +
-                '            <p class="card-text">' + data[i].title +'</p>\n' +
-                '            <p class="card-text">'+ data[i].director+'</p>\n' +
+                '        <div class="card-body" id="card-body">\n' +
+                '            <p class="card-text">' + data[i].title + '</p>\n' +
+                '            <p class="card-text">' + data[i].director + '</p>\n' +
                 '            <p class="card-text">' + data[i].genre + '</p>\n' +
                 '            <p class="card-text">' + data[i].rating + '</p>\n' +
                 '        </div>\n' +
                 '    </div>\n' +
-                '</div>'
+                '</div>';
         }
         return html;
     }
-    function filterMovies(movies){
-        movies.filter(function (movie){
-            movie.title.indexOf("1");
-        })
+
+    function filterMovies(movies) {
+        // reduce duplicate titles to one to display in browser
+        // if (key) is already in map replace with the one we're adding
+        let reduced_movies = [...movies.reduce((map, movie) => map.set(movie.title, movie), new Map()).values()];
+        return title_rating(reduced_movies);
+        // console.log(title_rating(reduced_movies));
     }
+
+    function title_rating(movies){
+        let reduce_movies = [];
+        movies.filter(movie => {
+            if(movie.title && movie.rating) {
+                reduce_movies.push(movie)
+            }
+        })
+        return reduce_movies
+    }
+
     fetch('https://trusted-lavish-roadway.glitch.me/movies')
         .then(response => response.json())
         .then(data =>{
             console.log(data)
-            let allMoviesHTML = renderHTML(data)
+            let filtered_movies = filterMovies(data);
+            let allMoviesHTML = renderHTML(filtered_movies)
             $('#movies-card').html(allMoviesHTML)
             filterMovies(data);
-
-        });
-
+        })
 
 
     function searchMovie(title){
         fetch(`http://www.omdbapi.com/?s=${title}&apikey=` + OMBD_TOKEN1 +'&' )
-            .then(response => response.json())
-            .then(data => console.log(data))
+            .then(response =>{
+            })
+            .then(data => {
+
+            })
+            .catch(error => {
+                console.log("That movie is not available.")
+            })
     }
+
 
 })();
 
