@@ -12,32 +12,21 @@
 </head>
 
 <body>
-<form id="movie-form">
-    <fieldset>
-        <label for="Title">Title</label>
-        <input id="title" type="search" class="" placeholder="Title">
-        <label for="Director">Director</label>
-        <input id="director" type="search" class="" placeholder="Director">
-        <label for="Genre">Genre</label>
-        <input id="genre" type="search" class="" placeholder="Genre">
-        <label for="Rating">Rating</label>
-        <input id="rating" type="search" placeholder="Rating">
-        <button type="submit"  class="">Search</button>
-    </fieldset>
-</form>
+<!--<form id="movie-form">-->
+<!--    <fieldset>-->
+<!--        <label for="Title">Title</label>-->
+<!--        <input id="title" type="search" class="" placeholder="Title">-->
+<!--        <label for="Director">Director</label>-->
+<!--        <input id="director" type="search" class="" placeholder="Director">-->
+<!--        <label for="Genre">Genre</label>-->
+<!--        <input id="genre" type="search" class="" placeholder="Genre">-->
+<!--        <label for="Rating">Rating</label>-->
+<!--        <input id="rating" type="search" placeholder="Rating">-->
+<!--        <button type="submit"  class="">Search</button>-->
+<!--    </fieldset>-->
+<!--</form>-->
 <div id="movies-card">
-    <div class="card" style="width: 18rem;">
-        <!--    <img src="..." class="card-img-top" alt="...">-->
-        <div class="card-body" id="card-body">
-            <p class="card-text">Title</p>
-            <p class="card-text">Director</p>
-            <p class="card-text">Genre</p>
-            <p class="card-text">Rating</p>
-            <button type="button" id="edit-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Edit
-            </button>
-        </div>
-    </div>
+
 </div>
 <!-- Button trigger modal -->
 
@@ -51,10 +40,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form class="modal-traverse-start">
                     <div class="mb-3">
                         <label for="input-title" class="form-label">Title</label>
-                        <input type="email" class="form-control" id="input-title"  required="required">
+                        <input type="email" class="form-control" id="input-title"required="required">
                     </div>
                     <div class="mb-3">
                         <label for="input-director" class="form-label">Director</label>
