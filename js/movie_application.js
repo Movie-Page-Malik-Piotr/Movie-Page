@@ -2,9 +2,20 @@
     "use strict"
     // Edit button on modal to edit movies
     // first button triggers the modal dropdown second one saves changes from edit
-    const editBtn = $('#edit-btn');
     const submitEditBtn = $('#submit-edit-btn');
 
+    function populateEdit(data){
+        for(let i = 0; i < data.length; ++i){
+            let movieIdPrep = `#movies-card${[i]}`
+            let movieId = $(movieIdPrep)
+            console.log(movieId);
+            movieId.click(event=>{
+                console.log('clicked')
+                console.log(movieId.children().children().children().next().html())
+            })
+        }
+
+    }
     // POST edit changes to Database
     submitEditBtn.click( event =>{
         const url = 'https://trusted-lavish-roadway.glitch.me/movies';
@@ -19,9 +30,6 @@
             .then( response => console.log(response) ) /* review was created successfully */
             .catch( error => console.error(error) );
     })
-    function populateEdit(){
-        $('#input-title').val($('#card-movie-title').text());
-    }
 
     // object that is used to gather data from modal to transfer to glitch database
     const movieData = {};
@@ -31,15 +39,14 @@
         let html = '';
         for (let i = 0; i < data.length; ++i){
             html +=
-                '<div id="movies-card">\n' +
+                `<div id="movies-card${[i]}">\n` +
                 '    <div class="card" style="width: 18rem;">\n' +
-                '        <!--    <img src="..." class="card-img-top" alt="...">-->\n' +
                 '        <div class="card-body" id="card-body">\n' +
                 `            <p class="card-text" id="card-movie-title">` + data[i].title + '</p>\n' +
                 `            <p class="card-text" id="card-movie-director">` + data[i].director + '</p>\n' +
                 `            <p class="card-text" id="card-movie-genre">` + data[i].genre + '</p>\n' +
                 `            <p class="card-text" id="card-movie-rating">` + data[i].rating + '</p>\n' +
-                '            <button type="button" id="edit-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">\n' +
+                `            <button type="button" id="edit-btn${[i]}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">\n` +
                 '                Edit\n' +
                 '            </button>\n' +
                 '        </div>\n' +
@@ -48,6 +55,7 @@
         }
         return html;
     }
+
 
     function filterMovies(movies) {
         // reduce duplicate titles to one single instance of movie to display in browser
@@ -76,9 +84,7 @@
             let allMoviesHTML = renderHTML(filtered_movies)
             $('#movies-card').html(allMoviesHTML)
             filterMovies(data);
-            editBtn.click(event =>{
-                populateEdit();
-            })
+            populateEdit(filtered_movies);
         })
 
 
@@ -94,7 +100,6 @@
             })
     }
 })();
-
 
 
 
