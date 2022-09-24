@@ -6,12 +6,22 @@
 
     function populateEdit(data){
         for(let i = 0; i < data.length; ++i){
-            let movieIdPrep = `#movies-card${[i]}`
-            let movieId = $(movieIdPrep)
-            console.log(movieId);
-            movieId.click(event=>{
+            let editIdPrep = `#edit-btn${[i]}`;
+            let editId = $(editIdPrep);
+            let movieIdPrep = `#movies-card${[i]}`;
+            let movieId = $(movieIdPrep);
+
+            let modal_title = $('#input-title')
+            let modal_director = $('#input-director')
+            let modal_genre = $('#input-genre')
+            let modal_rating = $('#input-rating')
+
+            editId.click(event=>{
                 console.log('clicked')
-                console.log(movieId.children().children().children().next().html())
+                modal_title.val(movieId.children().children().children().html())
+                modal_director.val(movieId.children().children().children().next().html())
+                modal_genre.val(movieId.children().children().children().next().next().html())
+                modal_rating.val(movieId.children().children().children().next().next().next().html())
             })
         }
 
