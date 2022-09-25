@@ -4,45 +4,53 @@
     // first button triggers the modal dropdown second one saves changes from edit
     const submitEditBtn = $('#submit-edit-btn');
 
-    function populateEdit(data){
-        for(let i = 0; i < data.length; ++i){
-            let editIdPrep = `#edit-btn${[i]}`;
-            let editId = $(editIdPrep);
-            let movieIdPrep = `#movies-card${[i]}`;
-            let movieId = $(movieIdPrep);
-
-            let modal_title = $('#input-title')
-            let modal_director = $('#input-director')
-            let modal_genre = $('#input-genre')
-            let modal_rating = $('#input-rating')
-
-            editId.click(event=>{
-                console.log('clicked')
-                modal_title.val(movieId.children().children().children().html())
-                modal_director.val(movieId.children().children().children().next().html())
-                modal_genre.val(movieId.children().children().children().next().next().html())
-                modal_rating.val(movieId.children().children().children().next().next().next().html())
-            })
-        }
-
-    }
-    // POST edit changes to Database
-    submitEditBtn.click( event =>{
-        const url = 'https://trusted-lavish-roadway.glitch.me/movies';
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(movieData),
-        };
-        fetch(url, options)
-            .then( response => console.log(response) ) /* review was created successfully */
-            .catch( error => console.error(error) );
-    })
-
     // object that is used to gather data from modal to transfer to glitch database
     const movieData = {};
+    function populateEdit(data){
+        for(let i = 0; i < data.length; ++i){
+            $(`#edit-btn${[i]}`).click(event=>{
+                movieData.title = $(`#movies-card${[i]}`).children().children().children().html()
+                movieData.director = $(`#movies-card${[i]}`).children().children().children().next().html()
+                movieData.genre = $(`#movies-card${[i]}`).children().children().children().next().next().html()
+                movieData.rating = $(`#movies-card${[i]}`).children().children().children().next().next().next().html()
+                movieData.id = $(`#movies-card${[i]}`).children().children().children().next().next().next().next().html()
+
+                $('#input-title').val(movieData.title)
+                $('#input-director').val(movieData.director)
+                $('#input-genre').val(movieData.genre)
+                $('#input-rating').val(movieData.rating)
+            })
+        }
+        // POST edit changes to Database
+        submitEditBtn.click( event =>{
+            movieData.title = $('#input-title').val()
+            movieData.director = $('#input-director').val()
+            movieData.genre = $('#input-genre').val()
+            movieData.rating = $('#input-rating').val()
+            console.log(movieData.id)
+
+            const url = `https://trusted-lavish-roadway.glitch.me/movies/${movieData.id}`;
+            const options = {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movieData),
+            };
+            fetch(url, options)
+                .then( response => {
+                    response
+
+                }) /* review was created successfully */
+                .catch( error => console.error(error));
+        })
+    }
+
+    console.log(movieData.title)
+
+
+
+
 
     // Renders card with movie info to webpage
     function renderHTML(data){
@@ -56,6 +64,7 @@
                 `            <p class="card-text" id="card-movie-director">` + data[i].director + '</p>\n' +
                 `            <p class="card-text" id="card-movie-genre">` + data[i].genre + '</p>\n' +
                 `            <p class="card-text" id="card-movie-rating">` + data[i].rating + '</p>\n' +
+                `            <p class="card-text" id="card-movie-rating" style="visibility: hidden">` + data[i].id + '</p>\n' +
                 `            <button type="button" id="edit-btn${[i]}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">\n` +
                 '                Edit\n' +
                 '            </button>\n' +
@@ -71,6 +80,7 @@
         // reduce duplicate titles to one single instance of movie to display in browser
         // if (key) is already in map replace with the one we're adding
         let reduced_movies = [...movies.reduce((map, movie) => map.set(movie.title, movie), new Map()).values()];
+        reduced_movies = [...reduced_movies.reduce((map, movie) => map.set(movie.rating, movie), new Map()).values()];
         return title_rating(reduced_movies);
         // console.log(title_rating(reduced_movies));
     }
@@ -80,10 +90,17 @@
         let reduce_movies = [];
         movies.filter(movie => {
             if(movie.title && movie.rating) {
+                if(typeof movie.genre === "undefined"){
+                    movie.genre = "";
+                    if(typeof movie.director === "undefined"){
+                        movie.director = "";
+                    }
+                }
                 reduce_movies.push(movie)
             }
+
         })
-        return reduce_movies
+        return reduce_movies;
     }
 
     fetch('https://trusted-lavish-roadway.glitch.me/movies')
@@ -95,6 +112,7 @@
             $('#movies-card').html(allMoviesHTML)
             filterMovies(data);
             populateEdit(filtered_movies);
+
         })
 
 
