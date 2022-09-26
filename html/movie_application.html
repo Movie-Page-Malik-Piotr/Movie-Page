@@ -8,66 +8,172 @@
     <title>Movie Application</title>
     <!--Bootstrap CDN-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/movies_application.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
+    <style>
+        body{
+            text-transform: capitalize;
+            font-family: 'Titillium Web', sans-serif;
+            font-size: larger;
+
+        }
+        .nav-details{
+            font-family: 'Bungee Shade', cursive;
+        }
+    </style>
 </head>
 
 <body>
-<div class="container text-center">
-    <div class="row">
-        <div class="col-2">
-            <nav class="nav flex-column">
-                <h1>Movie App</h1>
-                <p>search</p>
-<!--                <div class="container-fluid">-->
-<!--                    <form class="d-flex" role="search">-->
-<!--                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                        <button class="btn btn-outline-success" type="submit">Search</button>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <h6>Categories</h6>-->
-<!--                <p>Action</p>-->
-<!--                <p>Drama</p>-->
-<!--                <p>Horror</p>-->
-<!--                <p>Triller</p>-->
-<!--                <p>comedy</p>-->
-<!--                <p>Sci-Fi</p>-->
-<!--                <p>Romance</p>-->
-            </nav>
+<!--Nav Bar-->
+<header>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand nav-details" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
+                <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
+            </svg>Movie App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active nav-details" aria-current="page" id="all" href="#">All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-details nav-details" id="favorites" href="#">Favorites</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-details" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Genres
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item nav-details" id="action">Action</a></li>
+                            <li><a class="dropdown-item nav-details" id="drama" href="#">Drama</a></li>
+                            <li><a class="dropdown-item nav-details" id="sci-fi"href="#">Sci-Fi</a></li>
+                            <li><a class="dropdown-item nav-details" id="comedy" href="#">Comedy</a></li>
+                            <li><a class="dropdown-item nav-details" id="romance" href="#">Romance</a></li>
+                            <li><a class="dropdown-item nav-details" id="horror" href="#">Horror</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item nav-details" id="add-movie" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropAdd">Add Movie</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <input class="form-control me-2" type="text" id="s-input" placeholder="Search movies..." aria-label="Search">
+                    <button class="btn btn-outline-dark" id="s-btn">Search</button>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <div id="movies-card">
+    </nav>
+</header>
 
+<!--Rendering HTML to DOM -->
+<div id="movies-card" class="d-flex flex-row flex-wrap"></div>
+
+<!-- Modal For Editing Movies -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Movie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="modal-traverse-start">
+                    <div class="mb-3">
+                        <label for="input-title" class="form-label">Title</label>
+                        <input type="email" style="text-transform: capitalize" class="form-control" id="input-title"required="required">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-director" class="form-label">Director</label>
+                        <input type="email" class="form-control" id="input-director">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-genre" class="form-label">Genre</label>
+                        <select id="input-genre" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>Open this select menu</option>
+                            <option value="action">Action</option>
+                            <option value="drama">Drama</option>
+                            <option value="comedy">Comedy</option>
+                            <option value="horror">Horror</option>
+                            <option value="sci-fi">Sci-Fi</option>
+                            <option value="romance">Romance</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-rating" class="form-label">Rating</label>
+                        <select id="input-rating"  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>Open this select menu</option>
+                            <option value="Rated E">Rated E</option>
+                            <option value="Rated PG">Rated PG</option>
+                            <option value="Rated PG-13">Rated PG-13</option>
+                            <option value="Rated R">Rated R</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" id="remove-movie" data-bs-dismiss="modal" style="font-family: Bungee Shade, cursive">Remove</button>
+                <button type="button" id="submit-edit-btn" data-bs-dismiss="modal" class="btn btn-dark"style="font-family: Bungee Shade, cursive">Edit</button>
             </div>
         </div>
     </div>
 </div>
 
-<!--<form id="movie-form">-->
-<!--    <fieldset>-->
-<!--        <label for="Title">Title</label>-->
-<!--        <input id="title" type="search" class="" placeholder="Title">-->
-<!--        <label for="Director">Director</label>-->
-<!--        <input id="director" type="search" class="" placeholder="Director">-->
-<!--        <label for="Genre">Genre</label>-->
-<!--        <input id="genre" type="search" class="" placeholder="Genre">-->
-<!--        <label for="Rating">Rating</label>-->
-<!--        <input id="rating" type="search" placeholder="Rating">-->
-<!--        <button type="submit"  class="">Search</button>-->
-<!--    </fieldset>-->
-<!--</form>-->
-
-<!-- Button trigger modal -->
-
-
-<!-- Modal -->
-
+<!-- Modal For Adding Movies  -->
+<div class="modal fade" id="staticBackdropAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabelAdd">Add Movie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="input-title" class="form-label">Title</label>
+                    <input type="email" class="form-control" id="input-add-title"required="required">
+                </div>
+                <div class="mb-3">
+                    <label for="input-title" class="form-label">Director</label>
+                    <input type="email" class="form-control" id="input-add-director"required="required">
+                </div>
+                <div class="mb-3">
+                    <label for="input-add-genre" class="form-label">Genre</label>
+                    <select id="input-add-genre" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected></option>
+                        <option value="action">Action</option>
+                        <option value="drama">Drama</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="horror">Horror</option>
+                        <option value="sci-fi">Sci-Fi</option>
+                        <option value="romance">Romance</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="input-add-rating" class="form-label">Rating</label>
+                    <select id="input-add-rating"  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected></option>
+                        <option value="Rated E">Rated E</option>
+                        <option value="Rated PG">Rated PG</option>
+                        <option value="Rated PG-13">Rated PG-13</option>
+                        <option value="Rated R">Rated R</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal" style="font-family: Bungee Shade, cursive">Close</button>
+                <button type="button" id="submit-add-button" data-bs-dismiss="modal" class="btn btn-dark"  style="font-family: Bungee Shade, cursive">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--TOKEN-->
 <script src="../js/keys.js"></script>
-
-
-
-
 
 <!--Jquery CDN-->
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script><!--JS File-->
